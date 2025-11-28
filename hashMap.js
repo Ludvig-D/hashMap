@@ -35,21 +35,22 @@ export default class HashMap {
   }
 
   set(key, value) {
+    let hashed = this.hash(key);
+    let bucket = hashed % this.capacity;
+
+    if (this.buckets.length !== 0 && this.has(key))
+      for (let i = 0; 0 < this.buckets[bucket].length; i++) {
+        if (this.buckets[bucket][i].hashed == hashed)
+          return (this.buckets[bucket][i].value = value);
+      }
+
     this.keys++;
     if (this.keys > this.capacity * this.loadFacotr)
       this.capacity = this.capacity * 2;
 
     if (this.buckets.length !== this.capacity) this.resizeBucketTable();
-    let hashed = this.hash(key);
-    let bucket = this.buckets[hashed % this.capacity];
 
-    if (this.has(key))
-      for (let i = 0; 0 < bucket.length; i++) {
-        if (this.buckets[hashed % this.capacity][i].hashed == hashed)
-          return (this.buckets[hashed % this.capacity][i].value = value);
-      }
-
-    this.buckets[hashed % this.capacity] = [...bucket, { hashed, value }];
+    this.buckets[bucket] = [...this.buckets[bucket], { hashed, value }];
     return;
   }
 
@@ -64,5 +65,20 @@ export default class HashMap {
       if (this.buckets[hashs % this.capacity][i].hashed === hashs) return true;
     }
     return false;
+  }
+
+  remove(key) {
+    const hashs = this.hash(key);
+    const bucket = hashs % this.capacity;
+
+    if (!this.has(key)) return;
+
+    let newBucket = [];
+    for (let i = 0; i < this.buckets[bucket].length; i++) {
+      if (this.buckets[bucket][i].hashed !== hashs)
+        newBucket = this.buckets[bucket][i];
+    }
+
+    this.buckets[bucket] = newBucket;
   }
 }
