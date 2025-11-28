@@ -23,4 +23,5 @@ console.log(test.get());
 console.log(test.has('asdasd'));
 console.log(test.keys());
 console.log(test.values());
+console.log(test.entries());
 console.log(test.length());

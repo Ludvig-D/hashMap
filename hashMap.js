@@ -117,4 +117,14 @@ export default class HashMap {
     }
     return arr;
   }
+
+  entries() {
+    let arr = [];
+    for (let i = 0; i < this.buckets.length; i++) {
+      for (let j = 0; j < this.buckets[i].length; j++) {
+        arr = [...arr, [this.buckets[i][j].key, this.buckets[i][j].value]];
+      }
+    }
+    return arr;
+  }
 }
