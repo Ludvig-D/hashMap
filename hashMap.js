@@ -43,11 +43,26 @@ export default class HashMap {
     let hashed = this.hash(key);
     let bucket = this.buckets[hashed % this.capacity];
 
+    if (this.has(key))
+      for (let i = 0; 0 < bucket.length; i++) {
+        if (this.buckets[hashed % this.capacity][i].hashed == hashed)
+          return (this.buckets[hashed % this.capacity][i].value = value);
+      }
+
     this.buckets[hashed % this.capacity] = [...bucket, { hashed, value }];
     return;
   }
 
   get() {
     return this.buckets;
+  }
+
+  has(key) {
+    let hashs = this.hash(key);
+    let e = this.buckets[hashs % this.capacity];
+    for (let i = 0; i < e.length; i++) {
+      if (this.buckets[hashs % this.capacity][i].hashed === hashs) return true;
+    }
+    return false;
   }
 }
