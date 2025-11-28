@@ -81,4 +81,14 @@ export default class HashMap {
 
     this.buckets[bucket] = newBucket;
   }
+
+  length() {
+    let length = 0;
+    for (let i = 0; i < this.buckets.length; i++) {
+      for (let j = 0; j < this.buckets[i].length; j++) {
+        if (this.buckets[i][j] != undefined) length++;
+      }
+    }
+    return length;
+  }
 }
