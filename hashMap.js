@@ -11,12 +11,11 @@ export default class HashMap {
     }
     if (this.items === 1) return (this.buckets = addingBuckets);
 
-    let newBucket = this.buckets;
-    for (let i = 0; i < newBucket.length; i++) {
-      for (let j = 0; j < newBucket[i].length; j++) {
-        addingBuckets[newBucket[i][j].key % this.capacity] = [
-          ...addingBuckets[newBucket[i][j].key % this.capacity],
-          { key: newBucket[i][j].key, value: newBucket[i][j].value },
+    for (let bucket of this.buckets) {
+      for (let item of bucket) {
+        addingBuckets[item.key % this.capacity] = [
+          ...addingBuckets[item.key % this.capacity],
+          { key: item.key, value: item.value },
         ];
       }
     }
@@ -62,7 +61,7 @@ export default class HashMap {
   has(key) {
     let hashed = this.hash(key);
     for (let bucket of this.buckets[hashed % this.capacity]) {
-      if (bucket.key === hashs) return true;
+      if (bucket.key === hashed) return true;
     }
     return false;
   }
