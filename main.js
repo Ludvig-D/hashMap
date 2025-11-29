@@ -17,11 +17,12 @@ test.set('kite', 'pink');
 test.set('lion', 'golden');
 test.set('lion', 'notgolden');
 test.set('asdasd', 'banana');
-test.remove('lion');
+test.set('banana');
+// test.remove('lion');
 
 console.log(test.get());
 console.log(test.has('asdasd'));
-console.log(test.keys());
-console.log(test.values());
-console.log(test.entries());
-console.log(test.length());
+// console.log(test.keys());
+// console.log(test.values());
+// console.log(test.entries());
+// console.log(test.length());

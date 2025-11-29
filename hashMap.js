@@ -35,13 +35,14 @@ export default class HashMap {
   }
 
   set(key, value) {
+    if (key === undefined || value === undefined) return;
+
     let hashed = this.hash(key);
     let bucket = hashed % this.capacity;
 
     if (this.buckets.length !== 0 && this.has(key))
-      for (let i = 0; 0 < this.buckets[bucket].length; i++) {
-        if (this.buckets[bucket][i].hashed == hashed)
-          return (this.buckets[bucket][i].value = value);
+      for (let buck of this.buckets[bucket]) {
+        if (buck.hashed === hashed) return (buck.value = value);
       }
 
     this.items++;
@@ -59,10 +60,9 @@ export default class HashMap {
   }
 
   has(key) {
-    let hashs = this.hash(key);
-    let e = this.buckets[hashs % this.capacity];
-    for (let i = 0; i < e.length; i++) {
-      if (this.buckets[hashs % this.capacity][i].key === hashs) return true;
+    let hashed = this.hash(key);
+    for (let bucket of this.buckets[hashed % this.capacity]) {
+      if (bucket.key === hashs) return true;
     }
     return false;
   }
@@ -84,8 +84,8 @@ export default class HashMap {
 
   length() {
     let length = 0;
-    for (let i = 0; i < this.buckets.length; i++) {
-      for (let j = 0; j < this.buckets[i].length; j++) {
+    for (let bucket of this.buckets) {
+      for (let item of bucket) {
         length++;
       }
     }
@@ -100,9 +100,9 @@ export default class HashMap {
 
   keys() {
     let arr = [];
-    for (let i = 0; i < this.buckets.length; i++) {
-      for (let j = 0; j < this.buckets[i].length; j++) {
-        arr = [...arr, this.buckets[i][j].key];
+    for (let bucket of this.buckets) {
+      for (let item of bucket) {
+        arr = [...arr, item.key];
       }
     }
     return arr;
@@ -110,9 +110,9 @@ export default class HashMap {
 
   values() {
     let arr = [];
-    for (let i = 0; i < this.buckets.length; i++) {
-      for (let j = 0; j < this.buckets[i].length; j++) {
-        arr = [...arr, this.buckets[i][j].value];
+    for (let bucket of this.buckets) {
+      for (let item of bucket) {
+        arr = [...arr, item.value];
       }
     }
     return arr;
@@ -120,9 +120,9 @@ export default class HashMap {
 
   entries() {
     let arr = [];
-    for (let i = 0; i < this.buckets.length; i++) {
-      for (let j = 0; j < this.buckets[i].length; j++) {
-        arr = [...arr, [this.buckets[i][j].key, this.buckets[i][j].value]];
+    for (let bucket of this.buckets) {
+      for (let item of bucket) {
+        arr = [...arr, [item.key, item.value]];
       }
     }
     return arr;
