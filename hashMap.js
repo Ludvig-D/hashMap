@@ -73,9 +73,8 @@ export default class HashMap {
     if (!this.has(key)) return;
 
     let newBucket = [];
-    for (let i = 0; i < this.buckets[bucket].length; i++) {
-      if (this.buckets[bucket][i].key !== hashs)
-        newBucket = this.buckets[bucket][i];
+    for (let item of this.buckets[bucket]) {
+      if (item.key !== hashs) newBucket = item;
     }
 
     this.buckets[bucket] = newBucket;
