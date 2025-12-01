@@ -23,6 +23,8 @@ export default class HashMap {
   }
 
   hash(key) {
+    if (key === undefined) return;
+
     let hashCode = 0;
 
     const primeNumber = 31;
@@ -59,6 +61,8 @@ export default class HashMap {
   }
 
   has(key) {
+    if (key === undefined) return;
+
     let hashed = this.hash(key);
     for (let bucket of this.buckets[hashed % this.capacity]) {
       if (bucket.key === hashed) return true;
@@ -67,6 +71,8 @@ export default class HashMap {
   }
 
   remove(key) {
+    if (key === undefined) return;
+
     const hashs = this.hash(key);
     const bucket = hashs % this.capacity;
 
